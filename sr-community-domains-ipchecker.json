@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "rules": [
+    {
+      "domain_suffix": [
+        "checkip.amazonaws.com",
+        "eu.2gis.com",
+        "ifconfig.me",
+        "ipify.org",
+        "ping.ozon.kz",
+        "x5static.net"
+      ]
+    }
+  ]
+}

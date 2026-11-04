@@ -1,0 +1,37 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "sr-ru-whitelist",
+  "default_outbound": "proxy",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "Resolve at first resolving IP rule",
+      "type": "custom",
+      "action": "resolve"
+    },
+    {
+      "name": "sr-roscom-whitelist-ips → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-roscom-whitelist-ips.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    },
+    {
+      "name": "sr-mobile-domains → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-mobile-domains.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    }
+  ]
+}

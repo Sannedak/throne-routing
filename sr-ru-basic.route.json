@@ -1,0 +1,77 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "sr-ru-basic",
+  "default_outbound": "direct",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "sr-community-domains-community → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-domains-community.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-community-domain-ips → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-domain-ips.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-blackmatrix-telegram → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-blackmatrix-telegram.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-blackmatrix-discord → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-blackmatrix-discord.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-blackmatrix-whatsapp → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-blackmatrix-whatsapp.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-zkeen-telegram-ips → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-zkeen-telegram-ips.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "sr-zkeen-meta-ips → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-zkeen-meta-ips.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    }
+  ]
+}

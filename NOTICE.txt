@@ -1,3 +1,7 @@
+Shadowrocket rules: https://github.com/misha-tgshv/shadowrocket-configuration-file
+External lists: https://github.com/blackmatrix7/ios_rule_script
+Release lists: https://github.com/toneywhitez/zkeen_rules
+GeoIP and ASN: https://github.com/Loyalsoldier/geoip (GeoLite2 data created by MaxMind, https://www.maxmind.com)
 Derived routing data: https://github.com/hydraponique/roscomvpn-routing
 GeoSite: https://github.com/hydraponique/roscomvpn-geosite
 GeoIP: https://github.com/hydraponique/roscomvpn-geoip

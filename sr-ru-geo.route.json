@@ -1,0 +1,46 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "sr-ru-geo",
+  "default_outbound": "proxy",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "sr-community-custom-proxy → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-custom-proxy.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "Resolve at first resolving IP rule",
+      "type": "custom",
+      "action": "resolve"
+    },
+    {
+      "name": "sr-geoip-ru → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-geoip-ru.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    },
+    {
+      "name": "sr-community-domains-ipchecker → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-domains-ipchecker.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "version": 3,
+  "rules": [
+    {
+      "domain_suffix": [
+        "cp-rp16-normal-ycru.tiktokv.com",
+        "habr.com",
+        "p16-sign-sg.tiktokcdn.com",
+        "p16-sign-va.tiktokcdn.com",
+        "sf-ssp.tiktokcdn.com"
+      ]
+    }
+  ]
+}
