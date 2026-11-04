@@ -370,6 +370,23 @@ def shadow_profile(name, entries, final, base):
     return {'kind': 'throne-route-profile', 'v': 1, 'name': name, 'default_outbound': final.lower(), 'rules': rules}
 
 
+def network_profile(profiles):
+    result = {'kind': 'throne-route-profile', 'v': 1, 'name': 'sr-ru-auto', 'default_outbound': 'proxy', 'rules': [
+        {'name': 'DNS interception', 'type': 'custom', 'protocol': 'dns', 'action': 'hijack-dns'}
+    ]}
+    for network, source in (('wifi', 'sr-ru-geo'), ('cellular', 'sr-ru-whitelist')):
+        profile = profiles[source]
+        for original in profile['rules']:
+            if original.get('action') == 'hijack-dns':
+                continue
+            rule = json.loads(json.dumps(original))
+            rule['network_type'] = [network]
+            rule['name'] = network + ': ' + rule['name']
+            result['rules'].append(rule)
+        result['rules'].append({'name': network + ': final', 'type': 'custom', 'network_type': [network], 'action': 'route', 'outbound': profile['default_outbound']})
+    return result
+
+
 def build_shadow(sources, args, dist, manifest):
     pins = {repo: sources.sha(repo, ref) for repo, ref in ((SHADOW_REPO, 'main'), (BLACKMATRIX_REPO, 'master'), (GEO_REPO, 'release'), ('hydraponique/roscomvpn-geoip', 'master'), (MOBILE_REPO, 'main'))}
     report = {'commits': pins, 'profiles': {}, 'rule_sets': {}, 'scope': 'Active [Rule] sections of sr_ru_basic, sr_ru_geo and sr_ru_whitelist; General settings are not imported.'}
@@ -469,6 +486,8 @@ def build_shadow(sources, args, dist, manifest):
         if not json.loads(decoded.read_text())['rules']:
             raise ValueError('Empty compiled rules: ' + key)
         report['rule_sets'][key] = dict(source_info[key], counts={k: len(v) for k, v in rule.items()})
+    profiles['sr-ru-auto'] = network_profile(profiles)
+    report['profiles']['sr-ru-auto'] = {'wifi': 'sr-ru-geo', 'cellular': 'sr-ru-whitelist', 'other_networks': 'PROXY', 'final': 'PROXY'}
     for name, profile in profiles.items():
         dump(dist / (name + '.route.json'), profile)
         validate_profile(profile, dist, args.sing_box)
