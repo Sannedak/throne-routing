@@ -1,0 +1,5 @@
+Derived routing data: https://github.com/hydraponique/roscomvpn-routing
+GeoSite: https://github.com/hydraponique/roscomvpn-geosite
+GeoIP: https://github.com/hydraponique/roscomvpn-geoip
+Mobile: https://github.com/hxehex/russia-mobile-internet-whitelist
+See source repositories for their respective terms. No blanket license is asserted for third-party data.

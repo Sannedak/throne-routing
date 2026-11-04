@@ -1,0 +1,45 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "roscom-whitelist",
+  "default_outbound": "proxy",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "BLOCK sites",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-whitelist-block-sites.srs"
+      ],
+      "action": "reject"
+    },
+    {
+      "name": "DIRECT sites",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-whitelist-direct-sites.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    },
+    {
+      "name": "Resolve after domain rules (IPIfNonMatch approximation)",
+      "type": "custom",
+      "action": "resolve"
+    },
+    {
+      "name": "DIRECT ip",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-whitelist-direct-ip.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    }
+  ]
+}

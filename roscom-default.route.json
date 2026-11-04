@@ -1,0 +1,54 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "roscom-default",
+  "default_outbound": "proxy",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "BLOCK sites",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-block-sites.srs"
+      ],
+      "action": "reject"
+    },
+    {
+      "name": "PROXY sites",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-proxy-sites.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "DIRECT sites",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-direct-sites.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    },
+    {
+      "name": "Resolve after domain rules (IPIfNonMatch approximation)",
+      "type": "custom",
+      "action": "resolve"
+    },
+    {
+      "name": "DIRECT ip",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-direct-ip.srs"
+      ],
+      "action": "route",
+      "outbound": "direct"
+    }
+  ]
+}
