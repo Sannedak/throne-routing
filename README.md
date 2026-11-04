@@ -1,83 +1,82 @@
-# Throne Android: RoscomVPN + Mobile Whitelist
+# Throne Android: профили по образцу Shadowrocket
 
 [![Build and publish routing](https://github.com/Sannedak/throne-routing/actions/workflows/build.yml/badge.svg)](https://github.com/Sannedak/throne-routing/actions/workflows/build.yml)
 
-Ежедневная сборка совместимых правил из [RoscomVPN Routing](https://github.com/hydraponique/roscomvpn-routing) и [Russia Mobile Internet Whitelist](https://github.com/hxehex/russia-mobile-internet-whitelist) для Throne Android 2.x.
+Три профиля для Throne Android 2.x по активным правилам [misha-tgshv/shadowrocket-configuration-file](https://github.com/misha-tgshv/shadowrocket-configuration-file). Ежедневное обновление, настоящие sing-box `.srs`, сохранённый порядок правил.
 
-**Это перенос правил маршрутизации, а не полной конфигурации Happ, INCY или Mihomo.** Сервер VPN, подписка, DNS и параметры транспорта настраиваются отдельно. `.srs` содержит условия совпадения; действия и их приоритет задаёт профиль маршрутизации.
+**Это перенос маршрутизации, а не полной конфигурации Shadowrocket.** Сервер VPN, DNS, IPv6, исключения TUN, группы серверов, MITM и модули настраиваются отдельно. Проверка импорта по исходникам приложения не заменяет испытание на телефоне.
 
-## Что импортировать
+## Выбор профиля
 
-| Профиль | Поведение | Постоянный HTTPS URL |
-|---|---|---|
-| `roscom-mobile` | RoscomVPN DEFAULT + точные домены и IP из Hxehex в DIRECT после исключений BLOCK/PROXY | [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-mobile.route.json) · [ссылка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-mobile.import.txt) |
-| `roscom-default` | Совместимые правила исходного HAPP/DEFAULT.JSON | [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default.route.json) · [ссылка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default.import.txt) |
-| `roscom-whitelist` | Совместимые правила исходного HAPP/WHITELIST.JSON; это whitelist RoscomVPN, не Hxehex | [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-whitelist.route.json) · [ссылка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-whitelist.import.txt) |
+| Профиль | Правила сверху вниз | Остальной трафик | Импорт |
+|---|---|---|---|
+| **Basic** `sr-ru-basic` | Домены сообщества → PROXY; IP сообщества → PROXY; Telegram, Discord, WhatsApp → PROXY; IP Telegram и Meta → PROXY | **DIRECT** | [Строка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-basic.import.txt) · [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-basic.route.json) |
+| **Geo** `sr-ru-geo` | Исключения custom-proxy → PROXY; российские IP → DIRECT; IP-чекеры → DIRECT | **PROXY** | [Строка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-geo.import.txt) · [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-geo.route.json) |
+| **Whitelist** `sr-ru-whitelist` | IP белого списка RoscomVPN → DIRECT; точные имена Hxehex → DIRECT | **PROXY** | [Строка импорта](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-whitelist.import.txt) · [JSON](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-ru-whitelist.route.json) |
 
-Для поставленной задачи выбирайте `roscom-mobile`. Он расширяет DIRECT исходного DEFAULT; это **не** режим «напрямую исключительно разрешённое оператором». Все несовпавшие соединения идут через выбранный в Throne прокси.
+В текущих трёх исходниках нет активных BLOCK/REJECT. Старые блокировки RoscomVPN в новые профили не добавляются. Обработчик поддерживает REJECT/BLOCK как `reject` и сохраняет порядок действий: первое совпадение побеждает.
+
+В Geo строки для суффиксов `.ru/.рф/.su` закомментированы, поэтому не включены. Описание в README автора местами отличается от активного конфига. Аналогично не включены закомментированные voice_ports, банковские и другие необязательные списки. Раздел Rule в подключаемом `sr_ru_extended.conf` сейчас пуст; появление правил в нём остановит сборку для проверки порядка включения.
 
 ## Импорт в Throne Android 2.x
 
-1. Сначала добавьте и проверьте свой рабочий сервер/подписку VPN.
-2. Откройте [ссылку импорта roscom-mobile](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-mobile.import.txt). Скопируйте **содержимое файла целиком**: строку `throne://remoteroute/...`, а не HTTPS-адрес этого текстового файла.
-3. В Throne откройте боковое меню → **Routing / Маршрутизация** → меню импорта → **Import from clipboard / Импорт из буфера**. Подтвердите добавление удалённого профиля, оставьте **Auto update** включённым.
-4. Выберите `roscom-mobile` на экране маршрутизации. Само добавление не делает его активным. Если у группы серверов выбран отдельный профиль маршрутизации, назначьте `roscom-mobile` и этой группе либо верните наследование общего профиля.
-5. Проверьте правила: `DNS interception`, `BLOCK sites`, `PROXY sites`, `DIRECT sites`, `Resolve after domain rules …`, `DIRECT ip`. По умолчанию должен быть выбран `proxy`. Не переставляйте DIRECT выше BLOCK/PROXY.
-6. Включите обновление удалённых профилей в настройках подписок (интервал 1440 минут). После обновления профиля переподключитесь. При работающем соединении **Routing → Update rule-sets** обновляет сами `.srs`.
+1. Добавьте рабочий VPN-сервер/подписку и проверьте подключение.
+2. Откройте **«Строка импорта»** нужного профиля. Скопируйте содержимое целиком: строку `throne://remoteroute/...`, а не HTTPS-адрес `.import.txt`.
+3. В Throne: боковое меню → **Routing / Маршрутизация** → меню импорта → **Import from clipboard / Импорт из буфера**. Добавьте удалённый профиль с включённым **Auto update**.
+4. Выберите добавленный профиль на экране маршрутизации. Сам импорт его не активирует. Если группа серверов использует свой профиль, назначьте новый и ей либо включите наследование общего.
+5. Проверьте направление по умолчанию: **direct для Basic**, **proxy для Geo и Whitelist**. Сохраните порядок правил.
+6. Задайте обновление удалённых профилей каждые 1440 минут. После обновления переподключитесь. **Routing → Update rule-sets** обновляет сами `.srs`; структура профиля и наборы правил обновляются отдельно.
 
-Альтернативный путь: **Routing → New → Remote profile**, имя `roscom-mobile`, URL [roscom-mobile.route.json](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-mobile.route.json), загрузить/сохранить и выбрать профиль. Названия кнопок зависят от языка и версии.
+Альтернатива: **Routing → New → Remote profile**, URL `.route.json` из таблицы, загрузить, сохранить и выбрать. Названия кнопок зависят от языка и версии.
 
-Формат `kind: throne-route-profile`, версия `v: 1`, строковые `proxy/direct`, действие `reject`, URL `.srs` и `throne://remoteroute/` сверены с исходниками [Throne Android v2.0.0 RouteShare](https://github.com/throneproj/ThroneForAndroid/blob/v2.0.0/app/src/main/java/io/nekohasekai/sagernet/route/RouteShare.kt) и [текущим RouteShare](https://github.com/throneproj/ThroneForAndroid/blob/6df7c03b6aa34663e4a41d90ca52a10c2fb188f0/app/src/main/java/io/nekohasekai/sagernet/route/RouteShare.kt). Это проверка формата по реализации; установка и импорт на физическом Android-устройстве отдельно не подтверждены.
+Не импортируйте профиль маршрутизации как подписку серверов, а `.srs` — вместо профиля. Android использует структурированный формат `kind: throne-route-profile`, `v: 1`, строковые `proxy/direct`, `type: custom` и HTTPS URL `.srs`. Формат и кодирование ссылки сверены с [RouteShare v2.0.0](https://github.com/throneproj/ThroneForAndroid/blob/v2.0.0/app/src/main/java/io/nekohasekai/sagernet/route/RouteShare.kt) и [текущей реализацией](https://github.com/throneproj/ThroneForAndroid/blob/6df7c03b6aa34663e4a41d90ca52a10c2fb188f0/app/src/main/java/io/nekohasekai/sagernet/route/RouteShare.kt).
 
-Не импортируйте `.srs` как подписку серверов или raw sing-box JSON. Android не поддерживает raw routing profiles; используйте подготовленный структурированный профиль. См. [документацию Android](https://throneproj.github.io/android/) и [маршрутизации](https://throneproj.github.io/guides/routing/).
+**Фактический импорт на Android-устройстве не проверен.** Проверены формат, сборка ядром и опубликованные файлы. Документация: [Android](https://throneproj.github.io/android/) · [Маршрутизация](https://throneproj.github.io/guides/routing/).
 
-## Приоритеты и границы переноса
+## Преобразование и ограничения
 
-Профили выполняют доменные правила **BLOCK → PROXY → DIRECT**, затем разрешают ещё не обработанное доменное имя и проверяют IP-правила в том же порядке; остаток — PROXY. В текущих исходниках списки BlockIp и ProxyIp пусты. Это воспроизводит совместимую часть `IPIfNonMatch`: сначала доменное совпадение, затем IP. Полная эквивалентность Xray/Happ не заявляется: в Android доступность имени/IP зависит от DNS, FakeIP и sniffing. Для неизвестного имени с уже известным IP результат может зависеть от поведения ядра.
-
-| Исходное условие | Преобразование |
+| Условие | Результат |
 |---|---|
-| GeoSite `domain:` или строка без префикса | `domain_suffix` — домен и его поддомены |
-| `full:` | `domain` — точное имя |
-| `keyword:` | `domain_keyword` |
-| `regexp:` | `domain_regex`, без изменения регистра выражения |
-| GeoIP | Проверенные IPv4/IPv6 CIDR; сохранены исходные исключения RoscomVPN |
-| Hxehex `whitelist.txt` | Точное имя SNI, без расширения на все поддомены |
-| Hxehex `ipwhitelist.txt` + `cidrwhitelist.txt` | Объединение отдельных адресов и сетей, точная свёртка CIDR |
+| DOMAIN | Точное имя `domain` |
+| DOMAIN-SUFFIX | Домен и поддомены `domain_suffix` |
+| DOMAIN-KEYWORD | Подстрока `domain_keyword` |
+| IP-CIDR, голые IPv4/IPv6 | Проверенные CIDR без расширения диапазона |
+| IP-ASN Telegram | Диапазоны соответствующих ASN из GeoLite2-ASN CSV, опубликованного Loyalsoldier/geoip |
+| GEOIP,RU | `text/ru.txt` из той же семьи базы Loyalsoldier/geoip, что рекомендованная Country-without-asn.mmdb |
+| no-resolve | Не добавляется действие разрешения имени |
+| IP-правило с разрешением | `resolve` непосредственно перед первым таким правилом |
+| Голые имена Hxehex | Точное имя, без расширения на поддомены |
 
-В отличие от повторного использования готового upstream `.srs`, GeoSite собирается из исходных `data/` с семантикой [domain-list-community](https://github.com/v2fly/domain-list-community#structure-of-data). Это существенно для строк без префикса: они означают суффикс, а не произвольную подстроку. Будущие неизвестные конструкции, включая `include:` и селекторы категорий, останавливают сборку вместо пропуска правил.
+В Basic дополнительного resolve нет: все IP-правила используют no-resolve. Уже известный IP из TUN/DNS/sniffing может совпасть. В Geo resolve стоит после custom-proxy и перед GeoIP, в Whitelist — перед IP-списком. Доступность имени/IP зависит от клиента; полная эквивалентность сетевого поведения Shadowrocket не заявляется.
 
-Не перенесены автоматически:
+Конфиги сохранены как `source-sr-ru-*.conf`. В разделе `shadowrocket` [манифеста](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/manifest.json) указаны точные коммиты, исходные правила, счётчики и число диапазонов каждого ASN. ASN без текущих диапазонов отмечается числом 0. Файлы zkeen скачиваются из конкретного релиза с проверкой SHA-256 GitHub Release.
 
-- DNS-серверы и транспорт DoH исходника; `DnsHosts` для `lkfl2.nalog.ru` и `lknpd.nalog.ru`.
-- Специфичные параметры Happ/INCY (`UseChunkFiles`, импорт geo-баз), настройки Mihomo, серверы и proxy-groups.
-- Общая блокировка протокола BitTorrent: источник блокирует список известных DHT-доменов, это не блокировка всех торрентов.
-- Доступность VPN во время ограничений мобильной сети. Список Hxehex — наблюдения разных операторов/регионов, не гарантия доступности и не способ сделать недоступный сервер достижимым.
+Отдельно учитывайте:
 
-Настройки DNS остаются вашими. В исходном RoscomVPN указаны remote DoH `https://8.8.8.8/dns-query` и direct DoH `https://77.88.8.8/dns-query`; при необходимости задайте их в Throne вручную. Автоматический DNS routing Throne распознаёт встроенные имена `geosite-*`, но не обязан выводить DNS-политику из наших произвольных URL `.srs`. Поэтому разделение DNS RoscomVPN **не считается перенесённым**. Не включайте TUN bypass/direct-IP обход ядра: он может обойти приоритетные правила. Дополнительный AdBlock Throne добавляет собственные блокировки сверх этого профиля.
+- **DNS:** Basic/Geo в образце используют Cloudflare/Google и резерв Yandex/system, Whitelist — system. Они не переносятся. Throne использует ваши DNS-настройки; произвольные URL `.srs` не обязательно участвуют в автоматическом разделении DNS клиента.
+- **IPv6 и локальная сеть:** в исходнике IPv6 выключен, а `skip-proxy` и `tun-excluded-routes` заданы в General. Здесь эти параметры не воспроизведены. Проверьте IPv6 и обход локальной сети в Throne отдельно. Без обхода Geo/Whitelist могут отправлять локальный адрес через PROXY; в upstream IP-списке Basic есть даже 127.0.0.1. Обход сети меняет обработку относительно правил, поэтому скрыто не добавляется.
+- Группы AUTO/Israel, UDP fallback, ICMP, переписывание URL, сертификаты, JavaScript и YouTube-модули Shadowrocket не переносятся.
+- Дополнительный AdBlock/правила клиента могут менять результат. Список Hxehex не гарантирует доступность у оператора и не делает недоступный VPN-сервер достижимым.
+- Для первого импорта нужны доступные GitHub/raw.githubusercontent.com или кэш. Дождитесь загрузки всех `.srs`; режим подключения без rule-sets не проверяет этот набор целиком.
 
-При первом подключении нужны доступные GitHub/raw.githubusercontent.com либо уже загруженный кэш. Если Throne предлагает подключиться без rule-sets, такие правила временно не действуют. Для проверки полного набора дождитесь загрузки всех файлов; удобнее первый импорт выполнить через работающую сеть/Wi-Fi.
+## Совместимость со старыми ссылками
 
-## Сборка и публикация
+`roscom-default`, `roscom-whitelist`, `roscom-mobile` продолжают обновляться по прежней схеме. Они **не переключаются автоматически** на Shadowrocket: импортируйте и выберите `sr-ru-*`.
 
-Workflow запускается ежедневно в **03:17 UTC / 09:17 Омск**, вручную через Actions → Build and publish routing → Run workflow и при изменении исходников в `main`. Cron GitHub может задерживаться; при длительном отсутствии активности публичного репозитория GitHub может отключить расписание — его нужно снова включить на странице Actions.
+В старых профилях идут доменные BLOCK → PROXY → DIRECT, затем resolve и IP-правила в том же порядке, остаток PROXY. Это приближение HAPP `IPIfNonMatch`, не полный перенос Happ/INCY/Mihomo. `roscom-mobile` добавляет точные имена Hxehex и ipwhitelist/cidrwhitelist в DIRECT после исключений. DNS и DnsHosts остаются отдельными.
 
-Каждая сборка:
+## Обновление и проверка
 
-1. Фиксирует SHA коммита RoscomVPN Routing и Hxehex. Для GeoSite/GeoIP берёт именно версии из `Geositeurl`/`Geoipurl` этого снимка, затем фиксирует их SHA.
-2. Строго разбирает источники. Некорректный IP, пустой файл, неизвестное поле маршрутизации или новая семантика источника прерывают сборку.
-3. Компилирует SRS v3 закреплённым sing-box **1.12.12**, проверенным по SHA-256; декомпилирует каждый бинарный файл и выполняет `sing-box check` для всех профилей с тестовым proxy outbound.
-4. Одним коммитом публикует результат в ветку `rules`, сохраняя предыдущие коммиты. Сборка с ошибкой до публикации не заменяет действующие файлы.
-5. Скачивает опубликованные файлы по публичным HTTPS-адресам и сверяет SHA-256. Только после этого запуск считается успешным. Ошибка после push может означать, что публикация есть, но внешняя проверка не завершилась — смотрите шаги запуска.
+Actions запускается ежедневно **03:17 UTC / 09:17 Омск**, по **Run workflow** и при изменении сборщика/тестов. Расписание GitHub может задерживаться и отключаться после длительной неактивности репозитория.
 
-Постоянная база ссылок: `https://raw.githubusercontent.com/Sannedak/throne-routing/rules/`.
+Сборка фиксирует коммиты источников, строго разбирает данные, компилирует SRS v3 закреплённым **sing-box 1.12.12**, декомпилирует каждый файл и выполняет `sing-box check` для всех шести профилей с тестовым proxy. Неизвестная конструкция, новая ссылка или неподдержанный порядок no-resolve останавливают сборку вместо потери правил.
 
-Основные наборы: [BLOCK](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-block-sites.srs), [PROXY](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-proxy-sites.srs), [DIRECT domains](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-direct-sites.srs), [DIRECT IP](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/roscom-default-direct-ip.srs), [Mobile domains](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/mobile-domains.srs), [Mobile IP](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/mobile-ips.srs).
+Результат публикуется одним коммитом в `rules` с сохранением истории. Затем каждый файл скачивается по публичному HTTPS и проверяется по SHA-256. Ошибка до публикации сохраняет предыдущие файлы; ошибка после push может означать, что публикация состоялась, а проверка доставки не завершилась.
 
-[Манифест источников и счётчиков](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/manifest.json) · [SHA256SUMS](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/SHA256SUMS) · [История сборок](https://github.com/Sannedak/throne-routing/actions/workflows/build.yml).
+[Запуски workflow](https://github.com/Sannedak/throne-routing/actions/workflows/build.yml) · [manifest.json](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/manifest.json) · [SHA256SUMS](https://raw.githubusercontent.com/Sannedak/throne-routing/rules/SHA256SUMS).
 
-Чтобы повторить сборку локально с установленным sing-box: `python3 -m unittest -v`, затем `python3 build.py --output dist`. Каталог `dist` должен быть новым/пустым; `.source-cache` фиксирует скачанные ответы текущей проверки, для свежей сборки укажите новый `--cache`.
+Постоянная база: `https://raw.githubusercontent.com/Sannedak/throne-routing/rules/`. Все `.srs` перечислены в профилях и манифесте. Локально: `python3 -m unittest -v`, затем `python3 build.py --output dist` с установленным sing-box. Выходной каталог должен быть пустым; новый `--cache` нужен для свежего снимка.
 
-После импорта проверьте в журнале/дашборде Throne: GitHub/YouTube → proxy, домен из BLOCK → reject, известный российский домен из DIRECT → direct. Проверка синтаксиса и сборки не доказывает доступность сервисов у вашего оператора.
+После импорта проверьте журнал Throne: Basic — youtube.com через proxy, домен вне списков напрямую; Geo — habr.com через proxy, российский IP напрямую; Whitelist — совпавший IP/имя напрямую, остальное через proxy. Доступность сервера и сайтов проверяется отдельно.
 
-Исходные данные сохраняют условия своих авторов; уведомления и доступные лицензии публикуются рядом с результатом. Репозиторий не приписывает себе авторство или единую лицензию сторонних баз.
+Источники сохраняют условия авторов: [Shadowrocket configuration](https://github.com/misha-tgshv/shadowrocket-configuration-file), [blackmatrix7](https://github.com/blackmatrix7/ios_rule_script), [zkeen_rules](https://github.com/toneywhitez/zkeen_rules), [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip), [RoscomVPN](https://github.com/hydraponique/roscomvpn-routing), [Hxehex](https://github.com/hxehex/russia-mobile-internet-whitelist). Единой лицензии на сторонние базы репозиторий не заявляет.
