@@ -1,0 +1,108 @@
+{
+  "kind": "throne-route-profile",
+  "v": 1,
+  "name": "sr-ru-auto",
+  "default_outbound": "proxy",
+  "rules": [
+    {
+      "name": "DNS interception",
+      "type": "custom",
+      "protocol": "dns",
+      "action": "hijack-dns"
+    },
+    {
+      "name": "wifi: sr-community-custom-proxy → PROXY",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-custom-proxy.srs"
+      ],
+      "action": "route",
+      "outbound": "proxy",
+      "network_type": [
+        "wifi"
+      ]
+    },
+    {
+      "name": "wifi: Resolve at first resolving IP rule",
+      "type": "custom",
+      "action": "resolve",
+      "network_type": [
+        "wifi"
+      ]
+    },
+    {
+      "name": "wifi: sr-geoip-ru → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-geoip-ru.srs"
+      ],
+      "action": "route",
+      "outbound": "direct",
+      "network_type": [
+        "wifi"
+      ]
+    },
+    {
+      "name": "wifi: sr-community-domains-ipchecker → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-community-domains-ipchecker.srs"
+      ],
+      "action": "route",
+      "outbound": "direct",
+      "network_type": [
+        "wifi"
+      ]
+    },
+    {
+      "name": "wifi: final",
+      "type": "custom",
+      "network_type": [
+        "wifi"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    },
+    {
+      "name": "cellular: Resolve at first resolving IP rule",
+      "type": "custom",
+      "action": "resolve",
+      "network_type": [
+        "cellular"
+      ]
+    },
+    {
+      "name": "cellular: sr-roscom-whitelist-ips → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-roscom-whitelist-ips.srs"
+      ],
+      "action": "route",
+      "outbound": "direct",
+      "network_type": [
+        "cellular"
+      ]
+    },
+    {
+      "name": "cellular: sr-mobile-domains → DIRECT",
+      "type": "custom",
+      "rule_set": [
+        "https://raw.githubusercontent.com/Sannedak/throne-routing/rules/sr-mobile-domains.srs"
+      ],
+      "action": "route",
+      "outbound": "direct",
+      "network_type": [
+        "cellular"
+      ]
+    },
+    {
+      "name": "cellular: final",
+      "type": "custom",
+      "network_type": [
+        "cellular"
+      ],
+      "action": "route",
+      "outbound": "proxy"
+    }
+  ]
+}
