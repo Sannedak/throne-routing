@@ -74,6 +74,26 @@ class ConversionTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build.shadow_profile('bad', [('first', 'DIRECT', True, True), ('later', 'PROXY', False, True)], 'PROXY', 'https://example.org')
 
+    def test_network_profile_isolates_rules_resolve_and_final(self):
+        profiles = {
+            'sr-ru-geo': build.shadow_profile('geo', [('exception', 'PROXY', False, False), ('ru', 'DIRECT', True, True)], 'PROXY', 'https://example.org'),
+            'sr-ru-whitelist': build.shadow_profile('mobile', [('allowed', 'DIRECT', True, True)], 'PROXY', 'https://example.org'),
+        }
+        import copy
+        original = copy.deepcopy(profiles)
+        combined = build.network_profile(profiles)
+        self.assertEqual(profiles, original)
+        self.assertEqual(combined['default_outbound'], 'proxy')
+        self.assertNotIn('network_type', combined['rules'][0])
+        for network, source in [('wifi', 'sr-ru-geo'), ('cellular', 'sr-ru-whitelist')]:
+            rules = [r for r in combined['rules'] if r.get('network_type') == [network]]
+            self.assertEqual(len(rules), len(profiles[source]['rules']))
+            self.assertEqual(rules[-1]['outbound'], 'proxy')
+            self.assertEqual(rules[-1]['action'], 'route')
+            for actual, expected in zip(rules[:-1], profiles[source]['rules'][1:]):
+                self.assertEqual({k: v for k, v in actual.items() if k not in ('name', 'network_type')}, {k: v for k, v in expected.items() if k != 'name'})
+        self.assertTrue(all('network_type' in r for r in combined['rules'][1:]))
+
     def test_asn_expansion_filters_both_families(self):
         data = io.BytesIO()
         with zipfile.ZipFile(data, 'w') as archive:
