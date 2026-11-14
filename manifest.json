@@ -1,10 +1,10 @@
 {
-  "built_at": "2026-11-13T11:01:04.317967+00:00",
-  "routing_commit": "4e554b5006baa87bfdda7525ece291e967823168",
+  "built_at": "2026-11-14T10:28:39.057733+00:00",
+  "routing_commit": "73b9b13353e84a35f79027d28740e6848e75748c",
   "mobile_commit": "fad3653ebd4b212643774a4d10af3eb33838e4ff",
   "database_commits": {
     "hydraponique/roscomvpn-geosite@202610120948": "bb0e6b38617b4075c257c13c34d0d6f01c17f5da",
-    "hydraponique/roscomvpn-geoip@202611131053": "9886ef1bdf5fda72354260c7f3c9bb03b9aaa461"
+    "hydraponique/roscomvpn-geoip@202611141017": "e8fa068fb4927970a8e5677269f0095c57352b6d"
   },
   "rule_sets": {
     "roscom-default-block-sites": {
@@ -20,7 +20,7 @@
       "domain_suffix": 1013
     },
     "roscom-default-direct-ip": {
-      "ip_cidr": 37214
+      "ip_cidr": 37228
     },
     "roscom-whitelist-block-sites": {
       "domain_suffix": 809
@@ -48,10 +48,10 @@
   ],
   "shadowrocket": {
     "commits": {
-      "misha-tgshv/shadowrocket-configuration-file": "f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd",
+      "misha-tgshv/shadowrocket-configuration-file": "a7798f385bc5fcd97e848a9e12d060e91f937421",
       "blackmatrix7/ios_rule_script": "0b6897dc17e0c513d25449c935a9694818e32f0c",
       "Loyalsoldier/geoip": "ec6f8d0f6b5c6c6924d9230f2ed893f69585d38c",
-      "hydraponique/roscomvpn-geoip": "e8fa068fb4927970a8e5677269f0095c57352b6d",
+      "hydraponique/roscomvpn-geoip": "9f082c2b9c1187f79e8c149f4b5032fb65fd6eaa",
       "hxehex/russia-mobile-internet-whitelist": "fad3653ebd4b212643774a4d10af3eb33838e4ff"
     },
     "profiles": {
@@ -107,7 +107,7 @@
         "source_entries": 212,
         "resolve": false,
         "counts": {
-          "ip_cidr": 198
+          "ip_cidr": 199
         }
       },
       "sr-blackmatrix-telegram": {
@@ -223,28 +223,28 @@
   "compiler": "sing-box version 1.12.12",
   "sources": {
     "https://api.github.com/repos/hydraponique/roscomvpn-routing/commits/HEAD": {
-      "sha256": "8d0c9a89ad7aed42d297bb8bfa3dc5b3ea1046932bf9e8d00bb34135e783db78",
+      "sha256": "ed7f9c5d97da011b0a77dae9282f0895eb89e627aa4a9c147890a86275478395",
       "bytes": 29801
     },
     "https://api.github.com/repos/hxehex/russia-mobile-internet-whitelist/commits/HEAD": {
       "sha256": "7dcef4555439f839b43639f3adc7f60952c75945244a04c1c059e2bc7faaf716",
       "bytes": 7346
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/4e554b5006baa87bfdda7525ece291e967823168/HAPP/DEFAULT.JSON": {
-      "sha256": "e8ed5007b735c28f869e4714cf945930261b51c5af17a635d9eee28e180728ac",
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/73b9b13353e84a35f79027d28740e6848e75748c/HAPP/DEFAULT.JSON": {
+      "sha256": "3ae974717b38f1aeca251e6ac13e7dd9dc5ca47044f2b718ad0cd1a2a9c5757e",
       "bytes": 1439
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/4e554b5006baa87bfdda7525ece291e967823168/HAPP/WHITELIST.JSON": {
-      "sha256": "b80b8da9d2424614a45d6162e3e64ba3a2734c7f9c5125123aac18a52de63663",
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-routing/73b9b13353e84a35f79027d28740e6848e75748c/HAPP/WHITELIST.JSON": {
+      "sha256": "280500a1180b2b839c0f90b68ded7966ddf195cf7c4509f5847101e463303ee8",
       "bytes": 1088
     },
     "https://api.github.com/repos/hydraponique/roscomvpn-geosite/commits/202610120948": {
       "sha256": "abb6d3304a9e5bfd5f58588e5592f6f414424d374e2881447977a79213214094",
       "bytes": 4157
     },
-    "https://api.github.com/repos/hydraponique/roscomvpn-geoip/commits/202611131053": {
-      "sha256": "5cdee5c1ff8ca345ceef9a3f8fe46028a627fb0e2841b0fb9784d0eadd95d688",
-      "bytes": 8959
+    "https://api.github.com/repos/hydraponique/roscomvpn-geoip/commits/202611141017": {
+      "sha256": "ed861d5778e79cd9339e4822567db892dbf001e9c953549bae6aea2971f4cd15",
+      "bytes": 10413
     },
     "https://raw.githubusercontent.com/hydraponique/roscomvpn-geosite/bb0e6b38617b4075c257c13c34d0d6f01c17f5da/data/win-spy": {
       "sha256": "2d1782b3a1a86c92eb7fb74cf27e8763a4ecbbc4bf4a70c3c3c147aed9475adf",
@@ -326,15 +326,15 @@
       "sha256": "68bbfaaefe77158b1ce2d86de7f1856f4255f7e3417f5ad8992c5d41b08ef6d2",
       "bytes": 40
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/9886ef1bdf5fda72354260c7f3c9bb03b9aaa461/release/text/private.txt": {
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/e8fa068fb4927970a8e5677269f0095c57352b6d/release/text/private.txt": {
       "sha256": "d261010db11ac9d63f22671f8aa8624cfe9f98d32fc0e8428dac61d0f37a7d0d",
       "bytes": 346
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/9886ef1bdf5fda72354260c7f3c9bb03b9aaa461/release/text/direct.txt": {
-      "sha256": "7bb3d9077cb087105c6e22d117a54612ea172270e180bbfcd98c869deb0484c2",
-      "bytes": 611812
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/e8fa068fb4927970a8e5677269f0095c57352b6d/release/text/direct.txt": {
+      "sha256": "8062ecdd1afea56552c8f0669df5a75a60fea3aceeae66acadfc7f45b6addd4c",
+      "bytes": 612049
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/9886ef1bdf5fda72354260c7f3c9bb03b9aaa461/release/text/whitelist.txt": {
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/e8fa068fb4927970a8e5677269f0095c57352b6d/release/text/whitelist.txt": {
       "sha256": "5cf0b8862ad4f3318831dcf2e94076e221320ff47d77f1a12ebe661f613f70f6",
       "bytes": 115173
     },
@@ -351,8 +351,8 @@
       "bytes": 470393
     },
     "https://api.github.com/repos/misha-tgshv/shadowrocket-configuration-file/commits/main": {
-      "sha256": "4b9fd5a037ccb2bad4b654e1bb653c51f281bd37c8ebb71de1b6db15f6ff4510",
-      "bytes": 31125
+      "sha256": "1727bc4adfeb02ed40312b03cbad10899459e9dba5627843795de05f7901a4df",
+      "bytes": 36886
     },
     "https://api.github.com/repos/blackmatrix7/ios_rule_script/commits/master": {
       "sha256": "f9f7cf198a90a26d4542f813573645a303d08ecf8dc30ccfa4209f1ca71cc6a4",
@@ -363,27 +363,27 @@
       "bytes": 757780
     },
     "https://api.github.com/repos/hydraponique/roscomvpn-geoip/commits/master": {
-      "sha256": "ed861d5778e79cd9339e4822567db892dbf001e9c953549bae6aea2971f4cd15",
-      "bytes": 10413
+      "sha256": "ee429dfeb238a4f9079fb9c5a761b7d7c05acaf323299a73b10fe771be9482b6",
+      "bytes": 8818
     },
     "https://api.github.com/repos/hxehex/russia-mobile-internet-whitelist/commits/main": {
       "sha256": "7dcef4555439f839b43639f3adc7f60952c75945244a04c1c059e2bc7faaf716",
       "bytes": 7346
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/conf/sr_ru_basic.conf": {
-      "sha256": "07e534c6be4edd83e483830f279a91e05969a5451eafc8d87120aa7b8a92141c",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/conf/sr_ru_basic.conf": {
+      "sha256": "882b5b42e1291b23c9bf25d438f22127434b6c36c90c7313695733c422cad062",
       "bytes": 14832
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/conf/sr_ru_geo.conf": {
-      "sha256": "316e5e68cc5ae54511d50fed8065674f0d3828cbd0efd91f01c6848686c1a96b",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/conf/sr_ru_geo.conf": {
+      "sha256": "4b7805ac14d39dafaf86c64f6925f31162e4fc6f244afc1707b610777903e71d",
       "bytes": 14407
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/conf/sr_ru_whitelist.conf": {
-      "sha256": "74db4bb047cbcd6dc57d255ed639be4d3e5b249e16d40398d23fb9ee0b9506e8",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/conf/sr_ru_whitelist.conf": {
+      "sha256": "2282dacfceeed999a30f25a781d70c1de028dc864e56b4fa0df6253a32ffc188",
       "bytes": 13863
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/conf/sr_ru_extended.conf": {
-      "sha256": "313fde419b18dc1f2a259169d04fcca72860ef3099077d290b59daa8236b12d2",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/conf/sr_ru_extended.conf": {
+      "sha256": "d3965188109729607f3a4756acbf8f3adc6353fc20a944855cdd28cd72eee3b2",
       "bytes": 13890
     },
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/0b6897dc17e0c513d25449c935a9694818e32f0c/rule/Shadowrocket/Telegram/Telegram.list": {
@@ -395,16 +395,16 @@
       "bytes": 8337610
     },
     "https://api.github.com/repos/toneywhitez/zkeen_rules/releases/latest": {
-      "sha256": "c9dd637b853c137cfc72eae472e5a90c2f26d3e303689086ba724e18ecd829fc",
+      "sha256": "d929bf332621bfb0dd68304c7840323eb0407dcbc97cb08ce07adaa65098ad9e",
       "bytes": 65965
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/rules/domains_community.list": {
-      "sha256": "0576eb3574664ad1a628d5df969d1e29a3a2946d96be6fc523c7d536e10e3b68",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/rules/domains_community.list": {
+      "sha256": "18a7d37aeafb41f221ab142825016bbde0ab14136771fc46aee89d8fa8abfe5e",
       "bytes": 3758
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/rules/domain_ips.list": {
-      "sha256": "97239563cf79993a8cbd84e0deea81039c397be2068ade1f4d69bf22e9d11f80",
-      "bytes": 2962
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/rules/domain_ips.list": {
+      "sha256": "037d347af77b9ac2b01992fe9ecc3d65df212a7dfe1c07a49d9ca872715b30d5",
+      "bytes": 2943
     },
     "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/0b6897dc17e0c513d25449c935a9694818e32f0c/rule/Shadowrocket/Discord/Discord.list": {
       "sha256": "3d18c8fe716de06891ba3d6c34dba254cb65138a10f79e1a1a0628b5237ecb2c",
@@ -422,19 +422,19 @@
       "sha256": "89ab4d0ba83c18d640996874f77c835f22d48b7233d42519b6daa2f279e46475",
       "bytes": 2417
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/rules/custom-proxy.list": {
-      "sha256": "bf5a370d158456b6bad86336f4792d05e10f7d25af323ed4d658112b5cca86e5",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/rules/custom-proxy.list": {
+      "sha256": "a9bc35d6464da84d0afcd83e271e32b9f1391d1dabbd911b5f48903f71fbe6c5",
       "bytes": 379
     },
     "https://raw.githubusercontent.com/Loyalsoldier/geoip/ec6f8d0f6b5c6c6924d9230f2ed893f69585d38c/text/ru.txt": {
       "sha256": "5219dd85482a342b24da367213646be0efd8953f029638ab2790f7c2ff80ba6f",
       "bytes": 448703
     },
-    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/f6ff7d8fa3e423c69c4d08ba59885da8dd1504dd/rules/domains_ipchecker.list": {
-      "sha256": "4559198403f5adfc884ce334f8281684bc62625b54e100258160394c5b8afae0",
+    "https://raw.githubusercontent.com/misha-tgshv/shadowrocket-configuration-file/a7798f385bc5fcd97e848a9e12d060e91f937421/rules/domains_ipchecker.list": {
+      "sha256": "c00e88d22410384e788ccdeac6f280f0d1a44e2f24d50ec1a85b4f6a713cad66",
       "bytes": 366
     },
-    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/e8fa068fb4927970a8e5677269f0095c57352b6d/release/text/whitelist.txt": {
+    "https://raw.githubusercontent.com/hydraponique/roscomvpn-geoip/9f082c2b9c1187f79e8c149f4b5032fb65fd6eaa/release/text/whitelist.txt": {
       "sha256": "5cf0b8862ad4f3318831dcf2e94076e221320ff47d77f1a12ebe661f613f70f6",
       "bytes": 115173
     },
